@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0 shrink-to-fit=no">
-    <title>App Name: A Coding Challenge</title>
+    <title>Soiree Events: A Coding Challenge</title>
 
     <!-- favicon -->
     <link rel="shortcut icon" href="/img/logo-favicon.PNG" type="image/x-icon">
@@ -32,7 +32,7 @@
                 <a class="navbar-brand" href="#">
                     <img src="/img/curtis-henley-low-resolution-logo-color-on-transparent-background.png" height="50px"
                         alt="Curtis Henley logo">
-                    App Name
+                    Soiree Events
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -54,7 +54,7 @@
                         </li>
                         <li class="nav-item">
                             <!-- MAKE SURE LINK MATCHES REPO OF APP BEING DEMO'D -->
-                            <a class="nav-link" href="https://github.com/curtisdhenley?tab=repositories"
+                            <a class="nav-link" href="https://github.com/curtisdhenley/js-soiree-events"
                                 target="_blank">The Repo</a>
                         </li>
                         <li class="nav-item">
@@ -70,9 +70,64 @@
     </header>
 
     <main class="content container">
-        <h1>APP UI GOES HERE</h1>
-        <input type="text" id="message" placeholder="Enter a Message...">
-        <button class="btn btn-primary" type="button" id="btnSubmit">Display a message</button>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <!-- dropdown btn and state -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary">Pick A Location</button>
+                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu" id="eventDropDown">
+                        <!-- <li><a class="dropdown-item" href="#">Action</a></li> -->
+                    </ul>
+                </div>
+                <table class="table table-striped">
+                    <tr>
+                        <th colspan="2">Stats for All Events</th>
+                    </tr>
+                    <tr>
+                        <td>Total Attendance</td>
+                        <td id="total">100</td>
+                    </tr>
+                    <tr>
+                        <td>Average Attendance</td>
+                        <td id="average">100</td>
+                    </tr>
+                    <tr>
+                        <td>Most Attendance</td>
+                        <td id="most">100</td>
+                    </tr>
+                    <tr>
+                        <td>Least Attendance</td>
+                        <td id="least">100</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-12 col-md-6 order-first order-md-last">
+                <picture>
+                    <source srcset="/img/Soiree-events-500.png" media="(min-width: 576px)" />
+                    <img src="/img/Soiree-events-200.jpg" alt="app logo" class="img-fluid app-logo p-3">
+                </picture>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Event Name</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Attendance</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="eventTableBody">
+                    <!-- table template goes here -->
+                </tbody>
+            </table>
+        </div>
     </main>
 
     <footer class="container-fluid mt-5">
@@ -99,6 +154,22 @@
         </div>
     </footer>
 
+    <!-- dropdown menu item template -->
+    <template id="dropdownItemTemplate">
+        <li><a class="dropdown-item" onclick="getEvents(this)"></a></li>
+    </template>
+
+    <!-- table row template -->
+    <template id="eventTableRowTemplate">
+        <tr>
+            <td data-id="event"></td>
+            <td data-id="city"></td>
+            <td data-id="state"></td>
+            <td data-id="attendance"></td>
+            <td data-id="eventDate"></td>
+        </tr>
+    </template>
+
 
 
     <!-- Bootstrap JS CDN -->
@@ -112,7 +183,8 @@
     <!-- JS Scripts -->
     <script src="/js/site.js"></script>
     <script>
-        document.getElementById('btnSubmit').addEventListener('click', displayMsg);
+        // document.getElementById('btnSubmit').addEventListener('click', displayMsg);
+        buildDropDown()
     </script>
 </body>
 

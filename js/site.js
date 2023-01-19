@@ -1,11 +1,178 @@
-function displayMsg() {
-    let msg = document.getElementById('message').value;
+var events = [{
+    event: "ComicCon",
+    city: "New York",
+    state: "New York",
+    attendance: 240000,
+    date: "06/01/2017",
+},
+{
+    event: "ComicCon",
+    city: "New York",
+    state: "New York",
+    attendance: 250000,
+    date: "06/01/2018",
+},
+{
+    event: "ComicCon",
+    city: "New York",
+    state: "New York",
+    attendance: 257000,
+    date: "06/01/2019",
+},
+{
+    event: "ComicCon",
+    city: "San Diego",
+    state: "California",
+    attendance: 130000,
+    date: "06/01/2017",
+},
+{
+    event: "ComicCon",
+    city: "San Diego",
+    state: "California",
+    attendance: 140000,
+    date: "06/01/2018",
+},
+{
+    event: "ComicCon",
+    city: "San Diego",
+    state: "California",
+    attendance: 150000,
+    date: "06/01/2019",
+},
+{
+    event: "HeroesCon",
+    city: "Charlotte",
+    state: "North Carolina",
+    attendance: 40000,
+    date: "06/01/2017",
+},
+{
+    event: "HeroesCon",
+    city: "Charlotte",
+    state: "North Carolina",
+    attendance: 45000,
+    date: "06/01/2018",
+},
+{
+    event: "HeroesCon",
+    city: "Charlotte",
+    state: "North Carolina",
+    attendance: 50000,
+    date: "06/01/2019",
+},
+];
 
-    Swal.fire(
-        {
-            backdrop: false,
-            title: 'App Name',
-            text: msg
+function buildDropDown() {
+    // get the dropdown menu
+    let dropDownMenu = document.getElementById('eventDropDown');
+    // reset the dropdown menu to empty
+    dropDownMenu.innerHTML = '';
+    // pull object from storage
+    let currentEvents = events;
+
+    // pull out just city names
+    let eventCities = currentEvents.map((event) => event.city);
+    // filter the cities to only the DISTINCT city names
+    let distinctCities = [...new Set(eventCities)];
+
+    // get the template
+    const template = document.getElementById('dropdownItemTemplate');
+
+    // copy the child content from the node
+    let dropDownTemplateNode = document.importNode(template.content, true);
+    // grab the a tag from the template
+    let menuItem = dropDownTemplateNode.querySelector('a');
+    // change the inner text inside the a tag of the template
+    menuItem.innerHTML = 'All Cities';
+    // add an attribute to the a tag
+    menuItem.setAttribute('data-string', "All")
+    // append menuItem to dropdown menu
+    dropDownMenu.appendChild(menuItem);
+
+    for (let i = 0; i < distinctCities.length; i++) {
+        let cityMenuItem = document.importNode(template.content, true);
+        let cityBtn = cityMenuItem.querySelector('a');
+
+        cityBtn.innerHTML = distinctCities[i];
+        cityBtn.setAttribute("data-string", distinctCities[i]);
+
+        dropDownMenu.appendChild(cityMenuItem);
+    }
+
+    displayStats(currentEvents);
+    displayEventData(currentEvents)
+}
+
+function displayStats(eventsArr) {
+    let stats = calculateStats(eventsArr);
+
+    // quick maths
+
+    document.getElementById('total').innerHTML = stats.totalAttendance.toLocaleString();
+    document.getElementById('average').innerHTML = stats.averageAttendance.toLocaleString(
+        'en-US', {
+            maximumFractionDigits: 0,
+            minimumFractionDigits: 0
         }
     );
+    document.getElementById('most').innerHTML = stats.maximumAttendance.toLocaleString();
+    document.getElementById('least').innerHTML = stats.minimumAttendance.toLocaleString();
+}
+
+function calculateStats(eventsArr) {
+
+let sum = 0;
+let average = 0;
+let max = eventsArr[0].attendance;
+let min = eventsArr[0].attendance;
+
+    for (let i = 0; i < eventsArr.length; i++) {
+        let currentEvent = eventsArr[i];
+
+        sum += currentEvent.attendance;
+
+        if (max < currentEvent.attendance) {
+            max = currentEvent.attendance;
+        }
+
+        if (min > currentEvent.attendance) {
+            min = currentEvent.attendance;
+        }
+    }
+
+    average = sum / eventsArr.length;
+
+    let stats = {
+        totalAttendance: sum,
+        averageAttendance: average,
+        minimumAttendance: min,
+        maximumAttendance: max
+    }
+
+    return stats;
+
+}
+
+function displayEventData(eventsArr) {
+
+    let tableBody = document.getElementById('eventTableBody');
+    const tableRowTemplate = document.getElementById('eventTableRowTemplate');
+
+    tableBody.innerHTML = '';
+
+    for (let i = 0; i < eventsArr.length; i++) {
+        let currentEvent = eventsArr[i];
+        let eventRow = document.importNode(tableRowTemplate.content, true);
+
+        let tableCells = eventRow.querySelectorAll('td');
+
+        tableCells[0].innerHTML = currentEvent.event;
+        tableCells[1].innerHTML = currentEvent.city;
+        tableCells[2].innerHTML = currentEvent.state;
+        tableCells[3].innerHTML = currentEvent.attendance;
+        tableCells[4].innerHTML = currentEvent.date;
+
+        tableBody.appendChild(eventRow);
+    }
 }
