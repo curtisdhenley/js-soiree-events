@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="/css/site.css">
 </head>
 
-<body>
+<body onload="buildDropDown()">
 
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark" id="main-nav">
@@ -85,7 +85,7 @@
                 </div>
                 <table class="table table-striped">
                     <tr>
-                        <th colspan="2">Stats for All Events</th>
+                        <th id="cityHeader" colspan="2">Stats for All Events</th>
                     </tr>
                     <tr>
                         <td>Total Attendance</td>
@@ -182,10 +182,6 @@
 
     <!-- JS Scripts -->
     <script src="/js/site.js"></script>
-    <script>
-        // document.getElementById('btnSubmit').addEventListener('click', displayMsg);
-        buildDropDown()
-    </script>
 </body>
 
 </html>

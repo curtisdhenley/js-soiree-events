@@ -69,7 +69,7 @@ function buildDropDown() {
     // reset the dropdown menu to empty
     dropDownMenu.innerHTML = '';
     // pull object from storage
-    let currentEvents = events;
+    let currentEvents = getEventData();
 
     // pull out just city names
     let eventCities = currentEvents.map((event) => event.city);
@@ -112,9 +112,9 @@ function displayStats(eventsArr) {
     document.getElementById('total').innerHTML = stats.totalAttendance.toLocaleString();
     document.getElementById('average').innerHTML = stats.averageAttendance.toLocaleString(
         'en-US', {
-            maximumFractionDigits: 0,
-            minimumFractionDigits: 0
-        }
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0
+    }
     );
     document.getElementById('most').innerHTML = stats.maximumAttendance.toLocaleString();
     document.getElementById('least').innerHTML = stats.minimumAttendance.toLocaleString();
@@ -122,10 +122,10 @@ function displayStats(eventsArr) {
 
 function calculateStats(eventsArr) {
 
-let sum = 0;
-let average = 0;
-let max = eventsArr[0].attendance;
-let min = eventsArr[0].attendance;
+    let sum = 0;
+    let average = 0;
+    let max = eventsArr[0].attendance;
+    let min = eventsArr[0].attendance;
 
     for (let i = 0; i < eventsArr.length; i++) {
         let currentEvent = eventsArr[i];
@@ -170,9 +170,40 @@ function displayEventData(eventsArr) {
         tableCells[0].innerHTML = currentEvent.event;
         tableCells[1].innerHTML = currentEvent.city;
         tableCells[2].innerHTML = currentEvent.state;
-        tableCells[3].innerHTML = currentEvent.attendance;
+        tableCells[3].innerHTML = currentEvent.attendance.toLocaleString();
         tableCells[4].innerHTML = currentEvent.date;
 
         tableBody.appendChild(eventRow);
     }
+}
+
+function getEventData() {
+    let currentEvents = JSON.parse(localStorage.getItem('soiree-eventData'));
+
+    if (currentEvents == null) {
+        currentEvents = events;
+        localStorage.setItem('soiree-eventData', JSON.stringify(currentEvents))
+    }
+
+    return currentEvents;
+}
+
+function getEvents(element) {
+    let currentEvents = getEventData();
+    let cityName = element.getAttribute('data-string');
+    let filteredEvents = currentEvents;
+
+    if (cityName != 'All') {
+        filteredEvents = currentEvents.filter((event) => {
+            if (cityName == event.city) {
+                return event
+            }
+        });
+    }
+
+    let cityHeader = document.getElementById('cityHeader');
+    cityHeader.innerHTML = `Stats for ${cityName} events`;
+
+    displayStats(filteredEvents);
+    displayEventData(filteredEvents);
 }
