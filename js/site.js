@@ -201,8 +201,7 @@ function getEvents(element) {
         });
     }
 
-    let cityHeader = document.getElementById('cityHeader');
-    cityHeader.innerHTML = `Stats for ${cityName} events`;
+    document.getElementById('statsHeader').innerHTML = cityName;
 
     displayStats(filteredEvents);
     displayEventData(filteredEvents);
