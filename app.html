@@ -104,7 +104,6 @@
                         <td id="least">100</td>
                     </tr>
                 </table>
-                <button type="button" class="btn btn-secondary d-flex" data-bs-toggle="modal" data-bs-target="#newEvent">Add Event</button>
             </div>
             <div class="col-12 col-md-6 order-first order-md-last">
                 <picture>
@@ -113,7 +112,9 @@
                 </picture>
             </div>
         </div>
-        <div class="table-responsive">
+        <button type="button" class="btn btn-secondary d-flex" data-bs-toggle="modal" data-bs-target="#newEvent">Add
+            Event</button>
+        <div class="table-responsive mt-3">
             <table class="table table-striped">
                 <thead class="table-dark">
                     <tr>
@@ -176,7 +177,7 @@
     <div class="modal fade" id="newEvent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
-                <form action="#">
+                <form action="#" id="newEventForm">
                     <div class="modal-header">
                         <h2>Add A New Event</h2>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -249,7 +250,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="sendBtn">Save</button>
+                        <button type="button" class="btn btn-primary" id="sendBtn" onclick="saveEventData()" data-bs-dismiss="modal">Save</button>
                     </div>
                 </form>
             </div>

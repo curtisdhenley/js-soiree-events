@@ -206,3 +206,37 @@ function getEvents(element) {
     displayStats(filteredEvents);
     displayEventData(filteredEvents);
 }
+
+function saveEventData() {
+    let eventName = document.getElementById('newEventName').value;
+    let eventCity = document.getElementById('newEventCity').value;
+    let eventAttendance = parseInt(document.getElementById('newEventAttendance').value);
+    let eventDate = document.getElementById('newEventDate').value;
+
+    eventDate = `${eventDate} 00:00`;
+    eventDate = new Date(eventDate).toLocaleDateString();
+    
+    let stateSelect = document.getElementById('newEventState');
+    let state = stateSelect.options[stateSelect.selectedIndex].text;
+
+    let newEvent = {
+        event: eventName,
+        city: eventCity,
+        state: state,
+        attendance: eventAttendance,
+        date: eventDate,
+    };
+
+    let currentEvents = getEventData();
+
+    currentEvents.push(newEvent);
+
+    localStorage.setItem('soiree-eventData', JSON.stringify(currentEvents));
+
+
+    // update the page
+
+    buildDropDown();
+    document.getElementById('statsHeader').innerHTML = 'All';
+    document.getElementById('newEventForm').reset();
+}
