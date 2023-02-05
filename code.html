@@ -188,16 +188,22 @@
                             
                             // quick maths
 
-                            document.getElementById('total').innerHTML = stats.totalAttendance.toLocaleString();
-                            document.getElementById('average').innerHTML = stats.averageAttendance.toLocaleString(
+                            document.getElementById('total').innerHTML = 
+                            stats.totalAttendance.toLocaleString();
+
+                            document.getElementById('average').innerHTML = 
+                            stats.averageAttendance.toLocaleString(
                                 'en-US', {
                                 maximumFractionDigits: 0,
                                 minimumFractionDigits: 0
                             }
                             );
 
-                            document.getElementById('most').innerHTML = stats.maximumAttendance.toLocaleString();
-                            document.getElementById('least').innerHTML = stats.minimumAttendance.toLocaleString();
+                            document.getElementById('most').innerHTML = 
+                            stats.maximumAttendance.toLocaleString();
+
+                            document.getElementById('least').innerHTML = 
+                            stats.minimumAttendance.toLocaleString();
                         }
 
                         function calculateStats(eventsArr) {
@@ -237,27 +243,33 @@
                         function displayEventData(eventsArr) {
                         
                             let tableBody = document.getElementById('eventTableBody');
-                            const tableRowTemplate = document.getElementById('eventTableRowTemplate');
+                            const tableRowTemplate = 
+                            document.getElementById('eventTableRowTemplate');
                             
                             tableBody.innerHTML = '';
                             
-                            for (let i = 0; i < eventsArr.length; i++) { let currentEvent=eventsArr[i]; 
+                            for (let i = 0; i < eventsArr.length; i++) 
+                            { 
+                                let currentEvent=eventsArr[i]; 
                                 let eventRow = document.importNode(tableRowTemplate.content, true); 
                                 let tableCells = eventRow.querySelectorAll('td');
                                 tableCells[0].innerHTML=currentEvent.event; 
                                 tableCells[1].innerHTML=currentEvent.city;
                                 tableCells[2].innerHTML=currentEvent.state; 
                                 tableCells[3].innerHTML=currentEvent.attendance.toLocaleString();
-                                tableCells[4].innerHTML=currentEvent.date; tableBody.appendChild(eventRow); 
+                                tableCells[4].innerHTML=currentEvent.date; 
+                                tableBody.appendChild(eventRow); 
                             } 
                         }
 
                         function getEventData() {
-                            let currentEvents = JSON.parse(localStorage.getItem('soiree-eventData'));
+                            let currentEvents = 
+                            JSON.parse(localStorage.getItem('soiree-eventData'));
 
                             if (currentEvents == null) {
                                 currentEvents = events;
-                                localStorage.setItem('soiree-eventData', JSON.stringify(currentEvents))
+                                localStorage.setItem('soiree-eventData', 
+                                JSON.stringify(currentEvents))
                             }
 
                             return currentEvents;
@@ -285,7 +297,9 @@
                         function saveEventData() {
                             let eventName = document.getElementById('newEventName').value;
                             let eventCity = document.getElementById('newEventCity').value;
-                            let eventAttendance = parseInt(document.getElementById('newEventAttendance').value);
+                            let eventAttendance = 
+                            parseInt(document.getElementById('newEventAttendance').value);
+
                             let eventDate = document.getElementById('newEventDate').value;
                             
                             eventDate = `${eventDate} 00:00`;
@@ -306,7 +320,8 @@
                             
                             currentEvents.push(newEvent);
                             
-                            localStorage.setItem('soiree-eventData', JSON.stringify(currentEvents));
+                            localStorage.setItem('soiree-eventData', 
+                            JSON.stringify(currentEvents));
                             
                             
                             // update the page
@@ -324,16 +339,22 @@
                 <p>The code is structured in seven functions</p>
                 <h5><code>buildDropDown()</code></h5>
                 <p>This function changes the options available in the dropdown menu based on the events that have been posted.</p>
+
                 <h5><code>displayStats(eventsArr)</code></h5>
                 <p>This function displays various stats based on previous events.</p>
+
                 <h5><code>calculateStats(eventsArr)</code></h5>
                 <p>This function is used to handle all the calculations done for stats.</p>
+
                 <h5><code>displayEventData(eventsArr)</code></h5>
                 <p>This function takes in an object and breaks it down and displays it on a table.</p>
+
                 <h5><code>getEventData()</code></h5>
                 <p>This function checks to see if there is data in localStorage. If data is there it will pull it out. If no data found, it will store what it currently has in localStorage.</p>
+
                 <h5><code>getEvents(element)</code></h5>
                 <p>This function takes the data passed in from localStorage and directs it to the appropriate functions for processing.</p>
+                
                 <h5><code>saveEventData()</code></h5>
                 <p>This function takes in user provided info and stores it in localStorage as well as displays it on the page.</p>
             </div>
